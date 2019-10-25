@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# MORSH - UDP morse communication CLI
+# t.me/kusky
+
+source colors 2>/dev/null || echo ' missing "colors" dependency'
+command -v mpv >/dev/null || echo ' missing "mpv" dependency'
+
+cip="localhost"			# the IP to communicate with
+lip=$(hostname -i)		# get local IP
+prt="8866"			# port used for the communication
+sbk="f"				# key to trigger short beep
+lbk="j"				# key to trigger long beep
+qks="q"				# key to quit the communication
+sbf="$HOME/Music/morsh/sb.mp3"	# sound to play for short beep
+lbf="$HOME/Music/morsh/lb.mp3"	# sound to play for long beep
+udp="/dev/udp/${lip%?}/$prt"	# output connection
+
+echo -e $blue::$reset Communicating with \"$cip:$prt\"...
+
+#nc -lup $prt &			# listen for UDP data (blocks mpv)
+mpv --cache-secs=0 --demuxer-readahead-secs=0 udp://$cip:$prt >/dev/null &
+exec 3<>$udp			# open bidirectional UDP socket
+
+while true;
+do
+	read -rsn1 input	# read morse input
+	if [ "$input" = $sbk ]; then
+		cat $sbf >&3  	# send short beep
+	elif [ "$input" = $lbk ]; then
+		cat $lbf >&3	# send long beep
+	elif [ "$input" = $qks ]; then
+		#echo -ne " ${lip%?}:$prt has left" >&3
+		break 		# quit communication
+	fi
+done
+
+exec {3}<>&- 			# close bidirectional UDP socket
+
+echo -e " communication interrupted by $(whoami)"
