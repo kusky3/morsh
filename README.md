@@ -1,2 +1,2 @@
 # morsh
-UDP morse communication CLI
+UDP morse communication CLI written in BASH.
