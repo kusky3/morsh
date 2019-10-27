@@ -34,6 +34,4 @@ do
 	fi
 done
 
-exec {3}<>&- 			# close bidirectional UDP socket
-
 echo -e " communication interrupted by $(whoami)"
