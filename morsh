@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # MORSH - UDP morse communication CLI
-# t.me/kusky
 
 source colors 2>/dev/null || echo ' missing "colors" dependency'
 command -v mpv >/dev/null || echo ' missing "mpv" dependency'
