@@ -10,8 +10,8 @@ prt="8866"			# port used for the communication
 sbk="f"				# key to trigger short beep
 lbk="j"				# key to trigger long beep
 qks="q"				# key to quit the communication
-sbf="$HOME/Music/morsh/sb.mp3"	# sound to play for short beep
-lbf="$HOME/Music/morsh/lb.mp3"	# sound to play for long beep
+sbf="$HOME/Music/morsh/sb.mp3"	# sound to play for the short beep
+lbf="$HOME/Music/morsh/lb.mp3"	# sound to play for the long beep
 udp="/dev/udp/${lip%?}/$prt"	# output connection
 
 echo -e $blue::$reset Communicating with \"$cip:$prt\"...
